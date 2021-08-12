@@ -49,18 +49,14 @@ env = SkipFrame(env, skip=4)
 env = GrayScaleObservation(env)
 env = ResizeObservation(env, shape=84)
 state = env.reset()
-print(state.shape)
-
 
 for i in range(1000+1):
 
     env.render()
-    time.sleep(0.01)
     action = q.forward(state.unsqueeze(0).unsqueeze(0)).argmax().item()
 
-    state, reward, done, info = env.step(action)
+    state, _, _, _ = env.step(action)
+    time.sleep(0.01)
 
-    if done or i == 1000:
-        print(i)
 
 env.close()
